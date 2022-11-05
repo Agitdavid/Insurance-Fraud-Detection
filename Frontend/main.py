@@ -24,60 +24,55 @@ The notebook, model and documentation(Dockerfiles, FastAPI script, Streamlit App
 st.sidebar.header('Input Features of The Claim')
 
 AccidentArea = st.sidebar.text_input("""Input Area of Accident""")
-receiver_name = st.sidebar.text_input("""Input Receiver ID""")
-step = st.sidebar.slider("""Number of Hours it took the Transaction to complete: """)
-types = st.sidebar.subheader(f"""
-                 Enter Type of Transfer Made:\n\n\n\n
-                 0 for 'Cash In' Transaction\n 
-                 1 for 'Cash Out' Transaction\n 
-                 2 for 'Debit' Transaction\n
-                 3 for 'Payment' Transaction\n  
-                 4 for 'Transfer' Transaction\n""")
-types = st.sidebar.selectbox("",(0,1,2,3,4))
+BasePolicy = st.sidebar.text_input("""Input the Base Policy""")
+AgentType = st.sidebar.text_input("""Input the Agent Type""")
+
+PoliceReportFiled = st.sidebar.subheader(f"""
+                 Enter Reply:\n\n\n\n
+                 0 for 'No' \n 
+                 1 for 'Yes' \n """)
+PoliceReportFiled = st.sidebar.selectbox("",(0,1))
 x = ''
-if types == 0:
-    x = 'Cash in'
-if types == 1:
-    x = 'Cash Out'
-if types == 2:
-    x = 'Debit'
-if types == 3:
-    x = 'Payment'
-if types == 4:
-    x =  'Transfer'
-    
-amount = st.sidebar.number_input("Amount in $",min_value=0, max_value=110000)
-oldbalanceorg = st.sidebar.number_input("""Original Balance Before Transaction was made""",min_value=0, max_value=110000)
-newbalanceorg= st.sidebar.number_input("""New Balance After Transaction was made""",min_value=0, max_value=110000)
-oldbalancedest= st.sidebar.number_input("""Old Balance""",min_value=0, max_value=110000)
-newbalancedest= st.sidebar.number_input("""New Balance""",min_value=0, max_value=110000)
-isflaggedfraud = st.sidebar.selectbox("""Specify if this was flagged as Fraud by your System: """,(0,1))
+if PoliceReportFiled == 0:
+    x = 'Wait for a go Ahead with the check'
+if PoliceReportFiled == 1:
+    x = 'Go ahead with the check and confirmation'
+
+
+WitnessPresent = st.sidebar.subheader(f"""
+                 Enter Reply:\n\n\n\n
+                 0 for 'No' \n 
+                 1 for 'Yes' \n """)
+WitnessPresent = st.sidebar.selectbox("",(0,1))
+x = ''
+if WitnessPresent == 0:
+    x = 'Wait for a go Ahead with the check'
+if WitnessPresent== 1:
+    x = 'Go ahead with the check and confirmation'
+
+
+FraudFound= st.sidebar.selectbox("""Specify if this was flagged as Fraud by your System: """,(0,1))
 
 
 if st.button("Detection Result"):
     values = {
-    "step": step,
-    "types": types,
-    "amount": amount,
-    "oldbalanceorig": oldbalanceorg,
-    "newbalanceorig": newbalanceorg,
-    "oldbalancedest": oldbalancedest,
-    "newbalancedest": newbalancedest,
-    "isflaggedfraud": isflaggedfraud
+    "AccidentArea": AccidentArea,
+    "AgentType": AgentType,
+    "PoliceReportFiled": PoliceReportFiled,
+    "WitnessPresent": WitnessPresent,
+    "BasePolicy": BasePolicy,
+    "FraudFound": FraudFound
     }
 
 
     st.write(f"""### These are the Claim details:\n
-    Sender ID: {sender_name}
-    Receiver ID: {receiver_name}
-    1. Number of Hours it took to complete: {step}\n
-    2. Type of Transaction: {x}\n
-    3. Amount Sent: {amount}\n
-    4. Sender Previous Balance Before Transaction: {oldbalanceorg}\n
-    5. Sender New Balance After Transaction: {newbalanceorg}\n
-    6. Recepient Balance Before Transaction: {oldbalancedest}\n
-    7. Recepient Balance After Transaction: {newbalancedest}\n
-    8. System Flag Fraud Status: {isflaggedfraud}
+    
+    1. The area the accident took place: {AccidentArea}\n
+    2. Police report filed: {x}\n
+    3. Witness Present: {x}\n
+    4. Type of Agent: {AgentType}\n
+    5. The Base Policy: {BasePolicy}\n
+    6. System Flag Fraud Status: {FraudFound}
                 """)
 
     res = re.post(f"http://backend.docker:8000/predict/",json=values)
