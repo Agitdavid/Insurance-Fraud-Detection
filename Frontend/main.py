@@ -23,6 +23,9 @@ The notebook, model and documentation(Dockerfiles, FastAPI script, Streamlit App
 
 st.sidebar.header('Input Features of The Claim')
 
+PolicyNumber = st.sidebar.text_input("""Input the policy number""")
+Deductible = st.sidebar.text_input("""Input the Amount Deducted""")\
+Fault = st.sidebar.text_input("""Input the c""")
 AccidentArea = st.sidebar.text_input("""Input Area of Accident""")
 BasePolicy = st.sidebar.text_input("""Input the Base Policy""")
 AgentType = st.sidebar.text_input("""Input the Agent Type""")
@@ -54,7 +57,7 @@ if WitnessPresent== 1:
 FraudFound= st.sidebar.selectbox("""Specify if this was flagged as Fraud by your System: """,(0,1))
 
 
-if st.button("Detection Result"):
+if  st.button("Detection Result"):
     values = {
     "AccidentArea": AccidentArea,
     "AgentType": AgentType,

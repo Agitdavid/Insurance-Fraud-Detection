@@ -22,25 +22,26 @@ Note: add "/docs" to the URL to get the Swagger UI Docs or "/redoc"
   """
   return note
 
-@app.get('/')
+@app.route('/') # Homepage
 def home():
     return {'Title': 'Insurance Claims Fraud Detection API'}
 
 
 																	
 class detectFraud(BaseModel):
+    PolicyNumber:int
+    Deductible:int
     AccidentArea: object
-    PoliceReportFiled: object
-    WitnessPresent: object
-    AgentType: object
+    Fault: object
     BasePolicy: object
+    PastNumberOfClaims:object
     FraudFound: int	
    
 
 @app.post('/predict')
 def predict(data: detectFraud):
-                                                                                                                                                                                                                                
-    features = np.array([[data.AccidentArea, data.PoliceReportFiled, data.WitnessPresent, data.AgentType, data.FraudFound]])
+                                                                                                                          
+    features = np.array([[data.PolicyNumber, data.Deductible, data.AccidentArea, data.Fault, data.BasePolicy, data.PastNumberOfClaims, data.FraudFound]])
     model = joblib.load('auto_claims_fraud.pkl')
 
     predictions = model.predict(features)
