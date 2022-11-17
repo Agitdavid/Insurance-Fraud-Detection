@@ -23,58 +23,32 @@ The notebook, model and documentation(Dockerfiles, FastAPI script, Streamlit App
 
 st.sidebar.header('Input Features of The Claim')
 
-PolicyNumber = st.sidebar.text_input("""Input the policy number""")
-Deductible = st.sidebar.text_input("""Input the Amount Deducted""")\
-Fault = st.sidebar.text_input("""Input the c""")
-AccidentArea = st.sidebar.text_input("""Input Area of Accident""")
-BasePolicy = st.sidebar.text_input("""Input the Base Policy""")
-AgentType = st.sidebar.text_input("""Input the Agent Type""")
-
-PoliceReportFiled = st.sidebar.subheader(f"""
-                 Enter Reply:\n\n\n\n
-                 0 for 'No' \n 
-                 1 for 'Yes' \n """)
-PoliceReportFiled = st.sidebar.selectbox("",(0,1))
-x = ''
-if PoliceReportFiled == 0:
-    x = 'Wait for a go Ahead with the check'
-if PoliceReportFiled == 1:
-    x = 'Go ahead with the check and confirmation'
-
-
-WitnessPresent = st.sidebar.subheader(f"""
-                 Enter Reply:\n\n\n\n
-                 0 for 'No' \n 
-                 1 for 'Yes' \n """)
-WitnessPresent = st.sidebar.selectbox("",(0,1))
-x = ''
-if WitnessPresent == 0:
-    x = 'Wait for a go Ahead with the check'
-if WitnessPresent== 1:
-    x = 'Go ahead with the check and confirmation'
-
-
+Deductible = st.sidebar.text_input("""Input the Amount Deducted""")
+AccidentArea = st.sidebar.selectbox("""Input Area of Accident""", ('Urban', 'Rural'))
+Fault = st.sidebar.selectbox("""Input the fault""", ('Policy Holder', 'Third-party'))
+BasePolicy = st.sidebar.selectbox("""Input the Base Policy""", ('Liability', 'Collision', 'All Perils'))
+PastNumberOfClaims = st.sidebar.text_input("""How many previous claims""")
 FraudFound= st.sidebar.selectbox("""Specify if this was flagged as Fraud by your System: """,(0,1))
 
 
-if  st.button("Detection Result"):
+if  st.button("Predict"):
     values = {
+    "Deductible": Deductible,
     "AccidentArea": AccidentArea,
-    "AgentType": AgentType,
-    "PoliceReportFiled": PoliceReportFiled,
-    "WitnessPresent": WitnessPresent,
+    "Fault": Fault,
     "BasePolicy": BasePolicy,
+    "PastNumberOfClaims": PastNumberOfClaims,
     "FraudFound": FraudFound
     }
 
 
     st.write(f"""### These are the Claim details:\n
     
-    1. The area the accident took place: {AccidentArea}\n
-    2. Police report filed: {x}\n
-    3. Witness Present: {x}\n
-    4. Type of Agent: {AgentType}\n
-    5. The Base Policy: {BasePolicy}\n
+    1. The area the amount deducted: {Deductible}\n
+    2. The area of the accident: {AccidentArea}\n
+    3. The fault was: {Fault}\n
+    4. The Base Policy: {BasePolicy}\n
+    5. The number of past claims: {PastNumberOfClaims}\n
     6. System Flag Fraud Status: {FraudFound}
                 """)
 

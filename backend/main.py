@@ -29,7 +29,6 @@ def home():
 
 																	
 class detectFraud(BaseModel):
-    PolicyNumber:int
     Deductible:int
     AccidentArea: object
     Fault: object
@@ -41,7 +40,7 @@ class detectFraud(BaseModel):
 @app.post('/predict')
 def predict(data: detectFraud):
                                                                                                                           
-    features = np.array([[data.PolicyNumber, data.Deductible, data.AccidentArea, data.Fault, data.BasePolicy, data.PastNumberOfClaims, data.FraudFound]])
+    features = np.array([[data.Deductible, data.AccidentArea, data.Fault, data.BasePolicy, data.PastNumberOfClaims, data.FraudFound]])
     model = joblib.load('auto_claims_fraud.pkl')
 
     predictions = model.predict(features)
