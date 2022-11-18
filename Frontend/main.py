@@ -1,23 +1,20 @@
 import streamlit as st
 import json
 import requests as re
-
+from PIL import Image
 st.title("Insurance Claims Fraud Detection Web App")
 
-st.image("fraud.jpeg")
+image = Image.open('fraud.jpeg')
+st.image(image, width=400)
+
 
 st.write("""
 ## About
 Insurance fraud is a deliberate deception perpetrated against or by an insurance company or agent for financial gain. Fraud may be committed at different points by applicants, policyholders, third-party claimants, or professionals who provide services to claimants.
 
-**This Streamlit App utilizes a Machine Learning API in order to detect fraudulent insurance claims  based on the following criteria: AccidentArea, PoliceReportFiled, WitnessPresent, AgentType, BasePolicy, FraudFound and etc.** 
+**This Streamlit App utilizes a Machine Learning API in order to detect fraudulent insurance claims  based on the following criteria: Deductible, AccidentArea, Fault,PastNumberOfClaims, BasePolicy, FraudFound and etc.** 
 
-The notebook, model and documentation(Dockerfiles, FastAPI script, Streamlit App script) will soon be available on [GitHub.]()     
 
-**Made by Ochieng' David Agit**
-
-**Contributors:** 
-- **William Otieno**
 """)
 
 
