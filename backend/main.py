@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 app = FastAPI(
     title="Insurance Claims Fraud Detection API",
-    description="""An API that utilises a Machine Learning model that detects if a if an insurance claim is fraudulent or not based on the following features: hours, amount, transaction type etc.""",
+    description="""An API that utilises a Machine Learning model that detects if a if an insurance claim is fraudulent or not based on the following features: amount deducted,area of accident, fault, previous claims number, and base policy type.""",
     version="1.0.0", debug=True)
 
 
