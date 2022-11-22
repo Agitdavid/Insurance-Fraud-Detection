@@ -4,8 +4,8 @@ import requests as re
 from PIL import Image
 st.title("Insurance Claims Fraud Detection Web App")
 
-image = Image.open('fraud.jpeg')
-st.image(image, width=400)
+image = Image.open('img.png')
+st.image(image, width=650)
 
 
 st.write("""
