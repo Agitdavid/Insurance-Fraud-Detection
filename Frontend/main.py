@@ -20,6 +20,8 @@ Insurance fraud is a deliberate deception perpetrated against or by an insurance
 
 st.sidebar.header('Input Features of The Claim')
 
+claim_number = st.sidebar.text_input("""Input claim No.""")
+
 Deductible = st.sidebar.text_input("""Input the Amount Deducted""")
 AccidentArea = st.sidebar.selectbox("""Input Area of Accident""", ('Urban', 'Rural'))
 Fault = st.sidebar.selectbox("""Input the fault""", ('Policy Holder', 'Third-party'))
@@ -43,16 +45,20 @@ if  st.button("Predict"):
     
     1. The area the amount deducted: {Deductible}\n
     2. The area of the accident: {AccidentArea}\n
-    3. The fault was: {Fault}\n
+    3. The fault was caused by: {Fault}\n
     4. The Base Policy: {BasePolicy}\n
     5. The number of past claims: {PastNumberOfClaims}\n
     6. System Flag Fraud Status: {FraudFound}
                 """)
 
-    res = re.post(f"http://backend.docker:8000/predict/",json=values)
-    json_str = json.dumps(res.json())
-    resp = json.loads(json_str)
+    res = re.post(f"http://0.0.0.0:8000/predict/",data=values)
+    resp = res.json()
     
+    if claim_number=='':
+        st.write("Error! Please input another claim number!")
+    else:
+        st.write(f"""### The  claim No: {claim_number}  is {resp}.""")
+
     
 
 
